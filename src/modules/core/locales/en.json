@@ -1,0 +1,14 @@
+{
+	"validators": {
+		"required": "Required field",
+		"minlength": "Minimum length {0}",
+		"maxlength": "Maximum length {0}",
+		"min": "Minimum value {0}",
+		"max": "Maximum value {0}",
+		"email": "Invalid email"
+	},
+	"locale": {
+		"en": "English"
+	},
+	"hello": "Hello, {0}"
+}

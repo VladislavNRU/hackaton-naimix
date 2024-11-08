@@ -1,0 +1,49 @@
+@import 'variables';
+@import 'mixins';
+
+html, body, div, h1, h2, h3, h4, h5, h6, p, ul, ol, li, a, span, strong, em {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font: inherit;
+  font-size: 100%;
+  vertical-align: baseline;
+}
+
+body {
+  font-family: $font-family-base;
+  font-size: $font-size-base;
+  line-height: 1.5;
+  color: $font-color;
+  background-color: $main-color;
+}
+
+a {
+  color: $primary-color;
+  text-decoration: none;
+
+  &:hover,
+  &:focus {
+    color: $secondary-color;
+    text-decoration: underline;
+  }
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin-bottom: $spacer;
+  font-weight: 600;
+}
+
+ul, ol {
+  padding-left: $spacer;
+
+  li {
+    margin-bottom: $spacer;
+  }
+}
+
+.clearfix::after {
+  content: "";
+  display: table;
+  clear: both;
+}
