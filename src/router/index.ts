@@ -1,22 +1,25 @@
 import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router';
 
-
 const routes: Array<RouteRecordRaw> = [
 	{
 		path: '/',
 		name: 'home',
 		component: () => import('@modules/core/pages/HomePage.vue'),
 		//meta: { requiresAuth: true, onlyAdmin: true },
-    },
+	},
+	// {
+	// 	path: '/login',
+	// 	name: 'login',
+	// 	component: () => import('@modules/auth/pages/AuthPage.vue'),
+	// },
 	{
-		path: '/login',
-		name: 'login',
-		component: () => import('@modules/auth/pages/AuthPage.vue'),
+		path: '/tarot-spread',
+		name: 'tarot-spread',
+		component: () => import('@modules/core/pages/TarotSpread.vue'),
 	},
 	{
-		path: '/:catchAll(.*)',
-		name: '404',
-		component: () => import('@modules/core/pages/NotFoundPage.vue'),
+		path: '/:pathMatch(.*)*',
+		redirect: '/',
 	},
 ];
 
