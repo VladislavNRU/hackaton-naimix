@@ -3,12 +3,15 @@
 		<div class="content">
 			<h1 class="title">The Card Diviner.</h1>
 			<span class="description">
-				Подберите идеальную команду или кандидата для вашей компании с помощью нашего уникального инструмента чтения
-				карт
+				Подберите идеальную команду или кандидата для вашей компании с помощью нашего уникального
+				инструмента чтения карт
 			</span>
-			<CustomButton type="button" priority="main" text="Начать гадание" @click="router.push('/tarot-spread')"/>
-			<CustomButton type="button" priority="main" text="Тест выбора компании" @click="router.push('/choose-company')"/>
-
+			<CustomButton
+				type="button"
+				priority="main"
+				text="Начать гадание"
+				@click="router.push('/tarot-spread')"
+			/>
 		</div>
 		<CardLayout />
 	</div>

@@ -1,39 +1,38 @@
 <template>
-    <li :class="listItemClass" @click="select">
-      <slot>Летуаль</slot> 
-    </li>
+    <label for="input">{{ label }}</label>
+    <input name="input" :class="listItemClass" >
+    </input>
   </template>
   
-  <script>
-  export default {
-    name: 'SelectableListItem',
-    data() {
-      return {
-        selected: false // Состояние выбора элемента
-      };
-    },
-    computed: {
-      listItemClass() {
-        return {
-          'list-item': true,
-          'selected': this.selected // Применяем класс 'selected', если элемент выбран
-        };
-      }
-    },
-    methods: {
-      select() {
-        this.selected = !this.selected; // Переключаем состояние выбора
-        this.$emit('select', this.selected); // Эмитируем событие выбора с текущим состоянием
-      }
+  <script setup lang="ts">
+  import { computed, defineEmits, ref } from 'vue';
+  const props = defineProps({
+    label: {
+      type: String,
     }
-  }
+  })
+  const emits = defineEmits<{
+    (e: 'select', selected: boolean): void;
+  }>();
+  
+  // Определяем реактивное состояние для выбора элемента
+  const selected = ref(false);
+  
+  // Вычисляемое свойство с типом
+  const listItemClass = computed(() => ({
+    'list-item': true,
+    'selected': selected.value, // Применяем класс 'selected', если элемент выбран
+  }));
+  
+  // Метод для переключения состояния выбора
+  const select = () => {
+    selected.value = !selected.value; // Переключаем состояние выбора
+    emits('select', selected.value); // Эмитируем событие выбора с текущим состоянием
+  };
   </script>
   
   <style scoped>
   .list-item {
-    position: absolute;
-    width: 440px;
-    height: 33px;
     left: 20px;
     top: 20px;
     border-radius: 50px;
@@ -42,15 +41,19 @@
     flex-direction: row;
     justify-content: flex-start;
     align-items: center;
-    gap: 10;
-    padding: 8px 362px 8px 44px;
-    background: rgba(255, 255, 255, 0.2);
+    padding: 10px 70px 10px 20px;
+    background: #fff;
+    border: 1px #FF9929 solid;
+    margin-bottom: 10px;
   }
   
   
-  .selected {
-    background-color: #007bff; /* Цвет фона для выбранного элемента */
-    color: white; /* Цвет текста для выбранного элемента */
+  label {
+    text-align: start;
+    font-size: 12px;
+  }
+  input:focus {
+	  outline: none;
   }
   </style>
   

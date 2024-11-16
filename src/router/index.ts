@@ -23,6 +23,11 @@ const routes: Array<RouteRecordRaw> = [
 		component: () => import('@modules/core/pages/Choose.vue'),
 	},
 	{
+		path: '/auth',
+		name: 'auth',
+		component: () => import('@modules/core/pages/AuthPage.vue'),
+	},
+	{
 		path: '/results',
 		name: 'results',
 		component: () => import('@modules/results/pages/ResultPage.vue'),
