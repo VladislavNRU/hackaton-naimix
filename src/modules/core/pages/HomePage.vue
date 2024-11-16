@@ -9,12 +9,15 @@
 				Подберите идеальную команду или кандидата для вашей компании с помощью нашего уникального инструмента чтения
 				карт
 			</span>
-			<button class="start-button" @click="router.push('/tarot-spread')">Начать гадание</button>
+			<CustomButton type="button" priority="main" text="Начать гадание" @click="router.push('/tarot-spread')"/>
+			<CustomButton type="button" priority="main" text="Тест выбора компании" @click="router.push('/choose-company')"/>
+
 		</div>
 		<CardLayout />
 	</div>
 </template>
 <script setup lang="ts">
+import CustomButton from '@modules/core/components/Button.vue';
 import CardLayout from '@modules/core/components/CardLayout.vue';
 import Logo from '@modules/core/components/Logo.vue';
 import { useRouter } from 'vue-router';

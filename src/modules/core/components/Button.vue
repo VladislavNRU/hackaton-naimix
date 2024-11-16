@@ -26,7 +26,7 @@
         type: String,
         default: 'normal', 
         validator: function (value) {
-          return ['low', 'normal', 'high', 'gray', 'find', 'start'].includes(value);
+          return ['low', 'normal', 'high', 'gray', 'find', 'start', 'main'].includes(value);
         }
       },
       text: {
@@ -44,7 +44,8 @@
           'btn-gray': this.priority == 'gray',
           'btn-find': this.priority == 'find',
           'pressed': this.isPressed,
-          'btn-start': this.priority == 'start'
+          'btn-start': this.priority == 'start',
+          'btn-main': this.priority == 'main'
         };
       }
     },
@@ -130,6 +131,40 @@
     width: 5px;
     background: url('../../../assets/images/Icon.png');
     height: 10px;
+  }
+
+  .btn-main {
+    /* Auto layout */
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 10;
+    padding: 10px 15px 10px 15px;
+
+    /* Inside Auto Layout */
+    flex: none;
+    order: 1;
+    flex-grow: 0;
+    border-radius: 81px;
+    /* Color_White */
+    background: rgb(255, 255, 255);
+    border: 1px #FF9929 solid;
+    
+
+    background: linear-gradient(90.00deg, rgb(255, 153, 41),rgb(242, 84, 48));
+    -webkit-background-clip:
+    text;
+    -webkit-text-fill-color:
+    transparent;
+    background-clip:text;
+    text-fill-color: transparent;
+    font-family: Inter;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 17px;
+    letter-spacing: -3%;
+    text-align: left;
   }
 
   /* короче тут анимация, но она кривая, потом сделаю */

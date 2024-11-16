@@ -18,6 +18,11 @@ const routes: Array<RouteRecordRaw> = [
 		component: () => import('@modules/core/pages/TarotSpread.vue'),
 	},
 	{
+		path: '/choose-company',
+		name: 'choose-company',
+		component: () => import('@modules/core/pages/Choose.vue'),
+	},
+	{
 		path: '/:pathMatch(.*)*',
 		redirect: '/',
 	},
