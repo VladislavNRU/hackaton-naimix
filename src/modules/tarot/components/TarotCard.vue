@@ -2,7 +2,7 @@
 	<div class="tarot-card" :class="{ flipped: isFlipped }">
 		<div v-if="isFlipped">
 			<img
-				:src="tarot"
+				:src="`@assets/images/${id}.png`"
 				:alt="`${name} front`"
 				width="150"
 				height="210"
@@ -16,11 +16,10 @@
 <script setup lang="ts">
 import { defineProps } from 'vue';
 import cardBack from '@assets/images/cardBack.svg';
-import tarot from '@assets/images/tarot.png';
 
 defineProps<{
+	id: number;
 	name: string;
-	frontImage: string;
 	isFlipped: boolean;
 }>();
 </script>

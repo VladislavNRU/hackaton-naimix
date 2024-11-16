@@ -1,50 +1,31 @@
-export function useTarotApi() {
-	const cardNames = [
-		'The Fool',
-		'The Magician',
-		'The High Priestess',
-		'The Empress',
-		'The Emperor',
-		'The Hierophant',
-		'The Lovers',
-		'The Chariot',
-		'Strength',
-		'The Hermit',
-		'Wheel of Fortune',
-		'Justice',
-		'The Hanged Man',
-		'Death',
-		'Temperance',
-		'The Devil',
-		'The Tower',
-		'The Star',
-		'The Moon',
-		'The Sun',
-		'Judgement',
-		'The World',
-	];
+import { ref } from "vue";
+import { ICard } from "../types/card";
+import api from "@/services/api";
+import HttpExecutor from "@/services/HttpExecutor";
 
-	const generateCards = (): {
-		id: string;
-		name: string;
-		frontImage: string;
-		isFlipped: boolean;
-	}[] => {
-		const cards = [];
-		for (let i = 0; i < cardNames.length; i++) {
-			const name = cardNames[i];
-			const card = {
-				id: `card${i + 1}`,
-				name,
-				frontImage: '',
-				isFlipped: false,
-			};
-			cards.push(card);
+export function useTarotApi() {
+	const isLoading = ref(false);
+	const cards = ref<ICard[]>([]);
+
+
+	const getCards = async () => {
+		try {
+			isLoading.value = true;
+			const path = api.cards.getAll;
+			console.log(1)
+			const response = await HttpExecutor.get<ICard[]>(path);
+			console.log(response);
+			cards.value = response;
+		} catch (error) {
+			console.error(error);
+		} finally {
+			isLoading.value = false;
 		}
-		return cards;
-	};
+	}
 
 	return {
-		generateCards,
+		cards,
+		loadCards: getCards,
+		isLoading
 	};
 }

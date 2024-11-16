@@ -44,8 +44,7 @@ class HttpExecutor {
 				'Content-Type': 'application/json',
 			};
 		}
-
-		return fetch(url, options).then(handleResponse, handleNetworkError);
+		return fetch(url,{ ...options, mode: 'no-cors' }).then(handleResponse, handleNetworkError);
 	}
 
 	public get<OUT>(url: string, options?: RequestInit) {
