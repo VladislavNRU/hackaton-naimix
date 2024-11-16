@@ -1,12 +1,21 @@
 <template>
 	<nav>
-		<a href="#/" :class="{ active: selectedTab === 'home' }" @click="setSelectedTab('home')">Главная</a>
-		<a href="#/tarot-spread" :class="{ active: selectedTab === 'tarot' }" @click="setSelectedTab('tarot')">Расклад</a>
-		<a href="#/" :class="{ active: selectedTab === 'favorite' }" @click="setSelectedTab('favorite')">Избранное</a>
-		<a href="#/" :class="{ active: selectedTab === 'results' }" @click="setSelectedTab('results')">Результаты</a>
+		<router-link to="/" @click="setSelectedTab('home')">
+			<a :class="{ active: selectedTab === 'home' }">Главная</a>
+		</router-link>
+		<router-link to="/tarot-spread" @click="setSelectedTab('tarot')">
+			<a :class="{ active: selectedTab === 'tarot' }">Расклад</a>
+		</router-link>
+		<router-link to="/" @click="setSelectedTab('favorite')">
+			<a :class="{ active: selectedTab === 'favorite' }">Избранное</a>
+		</router-link>
+		<router-link to="/results" @click="setSelectedTab('results')">
+			<a :class="{ active: selectedTab === 'results' }">Результаты</a>
+		</router-link>
 		<div class="animation" :class="`start-${selectedTab}`"></div>
 	</nav>
 </template>
+
 <script setup>
 import { ref } from 'vue';
 
@@ -15,7 +24,8 @@ const setSelectedTab = tab => {
 	selectedTab.value = tab;
 };
 </script>
-<style lang="scss">
+
+<style lang="scss" scoped>
 nav {
 	margin-top: 1.5rem;
 	position: fixed;
@@ -29,72 +39,75 @@ nav {
 	font-size: 0;
 	z-index: 1000;
 	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-}
 
-nav a {
-	line-height: 50px;
-	font-size: 15px;
-	display: inline-block;
-	position: relative;
-	z-index: 1;
-	color: $secondary-color;
-	text-align: center;
-	text-decoration: none;
-	cursor: pointer;
-	transition: all 0.3s ease;
-}
+	a {
+		display: inline-block;
+		position: relative;
+		z-index: 1;
+		line-height: 50px;
+		font-size: 15px;
+		color: $secondary-color;
+		text-align: center;
+		text-decoration: none;
+		cursor: pointer;
+		transition: all 0.3s ease;
+	}
 
-nav .animation {
-	position: absolute;
-	height: 100%;
-	top: 0;
-	z-index: 0;
-	transition: all 0.5s ease 0s;
-	border-radius: 20px;
-}
+	.animation {
+		position: absolute;
+		height: 100%;
+		top: 0;
+		z-index: 0;
+		transition: all 0.5s ease;
+		border-radius: 20px;
+	}
 
-a:nth-child(1) {
-	width: 110px;
-}
-a:nth-child(2) {
-	width: 110px;
-}
-a:nth-child(3) {
-	width: 120px;
-}
-a:nth-child(4) {
-	width: 130px;
-}
+	a:nth-child(1) {
+		width: 110px;
+	}
 
-nav .start-home,
-a:nth-child(1):hover ~ .animation,
-a:nth-child(1).active ~ .animation {
-	width: 110px;
-	left: 0;
-	background-color: $primary-color;
-}
+	a:nth-child(2) {
+		width: 110px;
+	}
 
-nav .start-tarot,
-a:nth-child(2):hover ~ .animation,
-a:nth-child(2).active ~ .animation {
-	width: 110px;
-	left: 110px;
-	background-color: $info-color;
-}
+	a:nth-child(3) {
+		width: 120px;
+	}
 
-nav .start-favorite,
-a:nth-child(3):hover ~ .animation,
-a:nth-child(3).active ~ .animation {
-	width: 120px;
-	left: 220px;
-	background-color: $red-color;
-}
+	a:nth-child(4) {
+		width: 130px;
+	}
 
-nav .start-results,
-a:nth-child(4):hover ~ .animation,
-a:nth-child(4).active ~ .animation {
-	width: 130px;
-	left: 340px;
-	background-color: $green-color;
+	.start-home,
+	a:nth-child(1):hover ~ .animation,
+	a:nth-child(1).active ~ .animation {
+		width: 110px;
+		left: 0;
+		background-color: $primary-color;
+	}
+
+	.start-tarot,
+	a:nth-child(2):hover ~ .animation,
+	a:nth-child(2).active ~ .animation {
+		width: 110px;
+		left: 110px;
+		background-color: $info-color;
+	}
+
+	.start-favorite,
+	a:nth-child(3):hover ~ .animation,
+	a:nth-child(3).active ~ .animation {
+		width: 120px;
+		left: 220px;
+		background-color: $red-color;
+	}
+
+	.start-results,
+	a:nth-child(4):hover ~ .animation,
+	a:nth-child(4).active ~ .animation {
+		width: 130px;
+		left: 340px;
+		background-color: $green-color;
+	}
 }
 </style>
