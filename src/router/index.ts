@@ -4,7 +4,7 @@ const routes: Array<RouteRecordRaw> = [
 	{
 		path: '/',
 		name: 'home',
-		component: () => import('@modules/core/pages/HomePage.vue'),
+		component: () => import('@/modules/core/pages/StartPage.vue'),
 		//meta: { requiresAuth: true, onlyAdmin: true },
 	},
 	// {
@@ -15,7 +15,7 @@ const routes: Array<RouteRecordRaw> = [
 	{
 		path: '/tarot-spread',
 		name: 'tarot-spread',
-		component: () => import('@modules/core/pages/TarotSpread.vue'),
+		component: () => import('@/modules/tarot/pages/TarotSpread.vue'),
 	},
 	{
 		path: '/choose-company',

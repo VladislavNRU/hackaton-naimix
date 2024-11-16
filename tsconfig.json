@@ -11,8 +11,8 @@
 		"baseUrl": ".",
 		"strictFunctionTypes": false,
 		"paths": {
-			"@/*": ["src/*"],
 			"body-parser": ["node_modules/body-parser/index.d.ts"],
+			"@/*": ["src/*"],
 			"@assets/*": ["src/assets/*"],
 			"@modules/*": ["src/modules/*"],
 			"@router/*": ["src/router/*"],
