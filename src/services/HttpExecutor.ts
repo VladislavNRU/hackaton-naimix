@@ -7,7 +7,7 @@ class HttpExecutor {
 		response: new InterceptorManager(),
 	};
 
-	private request<OUT>(url: string, options: CRequestInit): Promise<OUT> {
+	private async request<OUT>(url: string, options: CRequestInit): Promise<OUT> {
 		const handleResponse = async (response: CResponse) => {
 			if (options.responseType === 'blob') {
 				const blob = await response.blob();
@@ -15,26 +15,36 @@ class HttpExecutor {
 			}
 
 			if (!response.ok) {
-				const data = await response.json();
-				throw data;
+				const errorData = await response.json().catch(() => ({}));
+				console.error('Server error:', errorData);
+				throw errorData;
 			}
+
 			response.data = await response.json();
 			this.interceptors.response.resolve(response);
 			return response.data as OUT;
 		};
 
 		const handleNetworkError = (error: Error) => {
-			console.error('Handle network error');
+			console.error('Handle network error:', error);
 			throw error;
 		};
 
 		const token = localStorage.getItem('accessToken');
-		options.headers = {
-			...options.headers,
-			Authorization: `Bearer ${token}`,
-		};
+		if (options.method !== 'OPTIONS' && token) {
+			options.headers = {
+				...options.headers,
+				Authorization: `Bearer ${token}`,
+			};
+		}
 
-		return fetch(url, options).then(handleResponse, handleNetworkError);
+		if (options.method && !['GET', 'OPTIONS'].includes(options.method)) {
+			options.headers = {
+				...options.headers,
+				'Content-Type': 'application/json',
+			};
+		}
+		return fetch(url,{ ...options, mode: 'no-cors' }).then(handleResponse, handleNetworkError);
 	}
 
 	public get<OUT>(url: string, options?: RequestInit) {
@@ -45,30 +55,18 @@ class HttpExecutor {
 	}
 
 	public post<IN, OUT>(url: string, data: IN, options?: RequestInit) {
-		let headers = {
-			'Content-Type': 'application/json',
-			...(options?.headers ?? {}),
-		};
-
 		return this.request<OUT>(url, {
 			method: 'POST',
-			headers,
-			...options,
 			body: JSON.stringify(data),
+			...options,
 		});
 	}
 
 	public put<IN, OUT>(url: string, data: IN, options?: RequestInit) {
-		let headers = {
-			'Content-Type': 'application/json',
-			...(options?.headers ?? {}),
-		};
-
 		return this.request<OUT>(url, {
 			method: 'PUT',
 			body: JSON.stringify(data),
 			...options,
-			headers,
 		});
 	}
 

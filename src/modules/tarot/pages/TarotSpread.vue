@@ -1,10 +1,11 @@
 <template>
 	<Navbar />
 	<div class="drag-drop-container">
-		<div class="info">
-			<p><strong>For:</strong>Company name</p>
-			<p><strong>Reader:</strong>User name</p>
-		</div>
+		<ParticipantInfo :targetTo="targetTo" :targetFrom="targetFrom" />
+		<TarotResult v-if="showResult" :showResult="showResult" @close-result="showResult = false" />
+		<button v-if="target.length === 0" @click="showTarotResult" class="finish-button">
+			Завершить расклад
+		</button>
 		<div class="drop-zone" @dragover.prevent @drop="onDrop('target')">
 			<div
 				v-for="card in target"
@@ -16,7 +17,7 @@
 				@click="flipCard(card)"
 				:class="{ flipped: card.isFlipped }"
 			>
-				<TarotCard :name="card.name" :isFlipped="card.isFlipped" :frontImage="card.frontImage" />
+				<TarotCard :id="card.id" :name="card.name" :isFlipped="card.isFlipped" />
 			</div>
 		</div>
 
@@ -30,7 +31,7 @@
 				@dragend="onDragEnd"
 				:style="getTransform(index, source.length)"
 			>
-				<TarotCard :name="card.name" :isFlipped="false" :frontImage="card.frontImage" />
+				<TarotCard :id="card.id" :name="card.name" :isFlipped="false" />
 			</div>
 		</div>
 	</div>
@@ -39,21 +40,37 @@
 <script setup lang="ts">
 import TarotCard from '@modules/tarot/components/TarotCard.vue';
 import Navbar from '@modules/core/components/Navbar.vue';
+import ParticipantInfo from '@modules/tarot/components/ParticipantInfo.vue'; // Импортируем компонент
+import TarotResult from '@modules/tarot/components/TarotResult.vue'; // Импортируем компонент
 import { useDraggable } from '@utils/useDraggable';
 import { ICard } from '@modules/tarot/types/card';
 import useCardRotation from '@modules/tarot/hooks/useCardRotation';
 import { useTarotApi } from '../hooks/useTarotApi';
+import { ref, onMounted } from 'vue';
+
+const targetTo = ref('Смолов Илья Александрович');
+const targetFrom = ref('Иванов Денис Петрович');
 
 const { source, target, onDragStart, onDrop, onDragEnd } = useDraggable<ICard>();
-const { generateCards } = useTarotApi();
-source.value = generateCards();
-
+const { cards, loadCards } = useTarotApi();
 const { getTransform } = useCardRotation();
 
 const flipCard = (card: ICard) => {
 	card.isFlipped = !card.isFlipped;
 };
+
+const showResult = ref(false);
+
+const showTarotResult = () => {
+	showResult.value = true;
+};
+
+onMounted(() => {
+	//if (!cards.value.length) loadCards();
+	source.value = cards.value;
+});
 </script>
+
 <style scoped lang="scss">
 .drag-drop-container {
 	display: flex;
@@ -116,7 +133,24 @@ const flipCard = (card: ICard) => {
 	transform: scale(1.02);
 }
 
-.info {
-	margin-left: 4rem;
+/* Стиль кнопки завершения расклада */
+.finish-button {
+	position: absolute;
+	bottom: 10%;
+	left: 50%;
+	transform: translateX(-50%);
+	background-color: #77b9b8;
+	color: #fff;
+	font-size: 18px;
+	font-weight: bold;
+	padding: 12px 24px;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+	transition: background-color 0.3s;
+}
+
+.finish-button:hover {
+	background-color: #5e9a98;
 }
 </style>
