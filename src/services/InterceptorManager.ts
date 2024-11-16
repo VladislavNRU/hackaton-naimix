@@ -1,7 +1,7 @@
 import { CResponse, InterceptorHandle } from './type';
 
 export class InterceptorManager {
-	private chain: Array<InterceptorHandle> = [];
+	private readonly chain: Array<InterceptorHandle> = [];
 	use(
 		resolve: (response: CResponse) => CResponse,
 		reject: (error: CResponse) => CResponse

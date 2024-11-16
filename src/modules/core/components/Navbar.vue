@@ -6,7 +6,7 @@
 		<router-link to="/tarot-spread" @click="setSelectedTab('tarot')">
 			<a :class="{ active: selectedTab === 'tarot' }">Расклад</a>
 		</router-link>
-		<router-link to="/" @click="setSelectedTab('favorite')">
+		<router-link to="/details" @click="setSelectedTab('favorite')">
 			<a :class="{ active: selectedTab === 'favorite' }">Избранное</a>
 		</router-link>
 		<router-link to="/results" @click="setSelectedTab('results')">

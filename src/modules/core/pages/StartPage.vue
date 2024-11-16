@@ -6,18 +6,19 @@
 				Подберите идеальную команду или кандидата для вашей компании с помощью нашего уникального
 				инструмента чтения карт
 			</span>
-			<CustomButton
+			<Button
 				type="button"
 				priority="main"
-				text="Начать гадание"
+				text="Начать расклада "
 				@click="router.push('/tarot-spread')"
+				class="start-button"
 			/>
 		</div>
 		<CardLayout />
 	</div>
 </template>
 <script setup lang="ts">
-import CustomButton from '@modules/core/components/Button.vue';
+import Button from '@modules/core/components/Button.vue';
 import CardLayout from '@modules/core/components/CardLayout.vue';
 import { useRouter } from 'vue-router';
 
@@ -61,10 +62,6 @@ const router = useRouter();
 	font-size: 1.2rem;
 	cursor: pointer;
 	background-image: $gradient-primary;
-	color: $white-color;
-	border: none;
-	border-radius: 20px;
-	transition: background-color 0.3s;
-	margin-bottom: 160px; // TODO: Костыль
+	margin-bottom: 5rem;
 }
 </style>

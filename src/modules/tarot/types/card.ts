@@ -1,6 +1,8 @@
 export interface ICard {
-	id: string;
+	id: number;
 	name: string;
-	isFlipped: boolean;
-	frontImage: string;
+	meaningUp: string;
+	meaningRev: string;
+	description: string;
+	isFlipped?: boolean;
 }
