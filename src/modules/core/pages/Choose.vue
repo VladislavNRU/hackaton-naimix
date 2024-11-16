@@ -7,7 +7,7 @@
 		<div class="content">
 			<h1 class="choose-title">Выберите компанию</h1>
 			<Input class="input-custom" />
-			<CompanyCard class="company-card" />
+			<CompanyCard name="Газпром" logo="" class="company-card" />
 			<DropdownCheckbox :isOpen="isOpen" class="checkbox" />
 			<CustomButton class="button-second" type="button" priority="find" text="Найти" />
 		</div>

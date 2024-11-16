@@ -20,25 +20,22 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import logoGaz from '../../../assets/images/Logo-g.png';
 
 interface Company {
 	id: number;
 	name: string;
 	logo: string;
 }
-
+const props = defineProps<{
+	name: string;
+	logo: any;
+}>();
 const selectedCompany = ref<number | null>(null);
 const companies = ref<Company[]>([
 	{
 		id: 1,
-		name: 'Газпром',
-		logo: logoGaz,
-	},
-	{
-		id: 2,
-		name: 'Газпром',
-		logo: logoGaz,
+		name: props.name,
+		logo: props.logo,
 	},
 ]);
 
