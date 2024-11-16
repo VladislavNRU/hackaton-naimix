@@ -28,19 +28,6 @@ defineProps({
 .table-body-container {
 	max-height: 400px;
 	overflow-y: auto;
-
-	&::-webkit-scrollbar {
-		width: 10px;
-	}
-	&::-webkit-scrollbar-track {
-		background: #e6e6e6;
-		border-radius: 5px;
-	}
-	&::-webkit-scrollbar-thumb {
-		background-color: $green-color;
-		border-radius: 5px;
-		cursor: grab;
-	}
 }
 
 .custom-table {

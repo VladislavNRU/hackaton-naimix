@@ -9,11 +9,14 @@
 			<Input class="input-custom" />
 			<CompanyCard class="company-card" />
 			<DropdownCheckbox class="checkbox" />
+			<CustomButton class="button-second" type="button" priority="find" text="Найти" />
 		</div>
 	</div>
 </template>
 
 <script setup lang="ts">
+import CustomButton from '@modules/core/components/Button.vue';
+
 import DropdownCheckbox from '@modules/core/components/Checkbox.vue';
 import CompanyCard from '@modules/core/components/CompanyCard.vue';
 import Input from '@modules/core/components/Input.vue';
@@ -31,7 +34,6 @@ import Navbar from '@modules/core/components/Navbar.vue';
 
 .content {
 	text-align: center;
-	flex-grow: 1;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
@@ -49,9 +51,15 @@ import Navbar from '@modules/core/components/Navbar.vue';
 	width: 100%;
 }
 .checkbox {
-	margin-right: auto;
+	width: 100%;
 }
 .company-card {
 	margin-bottom: 50px;
+}
+.button-second {
+	margin-top: 40px;
+	color: #fff;
+	width: 100%;
+	padding: 10px;
 }
 </style>

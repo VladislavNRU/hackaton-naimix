@@ -22,7 +22,7 @@ import CustomButton from '@modules/core/components/Button.vue';
 			width: 17px;
 			left: 12px;
 			height: 17px;
-			background: url('../../../assets/images/Icon.png');
+			background: url('@/assets/images/search.svg');
 		}
 	}
 	&-text {

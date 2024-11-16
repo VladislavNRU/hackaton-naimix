@@ -1,33 +1,90 @@
 <template>
 	<div>
-		<label>
-			<input type="checkbox" v-model="isOpen" />
+		<label class="checkbox-rel">
+			<input class="checkbox" type="checkbox" v-model="isOpen" />
 			Расклад для сотрудников
+			<span class="checkmark"></span>
 		</label>
 		<transition name="fade">
-			<ul class="menu" v-if="isOpen" ref="list">
-				<li v-for="item in items" :key="item">{{ item }}</li>
+			<ul v-if="isOpen" ref="list">
+				<CompanyCard />
 			</ul>
 		</transition>
 	</div>
 </template>
 
-<script lang="ts">
-import { defineComponent, ref } from 'vue';
+<script setup lang="ts">
+import { ref } from 'vue';
+import CompanyCard from './CompanyCard.vue';
 
-export default defineComponent({
-	name: 'CollapsibleList',
-	setup() {
-		const isOpen = ref(false);
-		// сюда пихнуть компании
-		const items = ref(['Пункт 1', 'Пункт 2', 'Пункт 3', 'Пункт 4']);
-
-		return {
-			isOpen,
-			items,
-		};
-	},
-});
+const isOpen = ref(false);
+const items = ref(['Пункт 1', 'Пункт 2', 'Пункт 3', 'Пункт 4']);
 </script>
 
-<style scoped></style>
+<style scoped>
+.checkbox {
+	flex-direction: column;
+	& label {
+		align-self: start;
+	}
+}
+.checkmark {
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 25px;
+	width: 25px;
+	background-color: #eee;
+}
+.checkbox-rel {
+	position: relative;
+	display: flex;
+	align-items: center;
+	padding-left: 50px;
+}
+.container input {
+	position: absolute;
+	opacity: 0;
+	cursor: pointer;
+	height: 0;
+	width: 0;
+}
+/* On mouse-over, add a grey background color */
+.container:hover input ~ .checkmark {
+	background-color: #ccc;
+}
+
+/* When the checkbox is checked, add a blue background */
+.container input:checked ~ .checkmark {
+	background-color: #ff9929;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after {
+	content: '';
+	position: absolute;
+	display: none;
+}
+
+ul {
+	padding: 0;
+}
+
+/* Show the checkmark when checked */
+.container input:checked ~ .checkmark:after {
+	display: block;
+}
+
+/* Style the checkmark/indicator */
+.container .checkmark:after {
+	left: 9px;
+	top: 5px;
+	width: 5px;
+	height: 10px;
+	border: solid white;
+	border-width: 0 3px 3px 0;
+	-webkit-transform: rotate(45deg);
+	-ms-transform: rotate(45deg);
+	transform: rotate(45deg);
+}
+</style>

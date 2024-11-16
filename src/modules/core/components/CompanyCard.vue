@@ -18,41 +18,34 @@
 	</div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue';
+<script setup lang="ts">
+import { ref } from 'vue';
 import logoGaz from '../../../assets/images/Logo-g.png';
 
 interface Company {
 	id: number;
 	name: string;
-	logo: string; // Замените на URL логотипа
+	logo: string;
 }
 
-export default defineComponent({
-	data() {
-		return {
-			selectedCompany: null as number | null,
-			companies: [
-				{
-					id: 1,
-					name: 'Газпром',
-					logo: logoGaz,
-				},
-				{
-					id: 2,
-					name: 'Газпром',
-					logo: logoGaz,
-				},
-			] as Company[],
-		};
+const selectedCompany = ref<number | null>(null);
+const companies = ref<Company[]>([
+	{
+		id: 1,
+		name: 'Газпром',
+		logo: logoGaz,
 	},
-	methods: {
-		onCompanyChange() {
-			console.log('Выбрана компания с ID:', this.selectedCompany);
-			// Здесь можно добавить логику для сохранения выбранного значения
-		},
+	{
+		id: 2,
+		name: 'Газпром',
+		logo: logoGaz,
 	},
-});
+]);
+
+function onCompanyChange() {
+	console.log('Выбрана компания с ID:', selectedCompany.value);
+	// Здесь можно добавить логику для сохранения выбранного значения
+}
 </script>
 
 <style scoped lang="scss">
@@ -98,19 +91,19 @@ export default defineComponent({
 				&:before {
 					content: '';
 					display: inline-block;
-					width: 13px;
-					height: 13px;
+					width: 20px;
+					height: 20px;
 					position: absolute;
 					left: 0;
-					bottom: 1px;
+					bottom: -5px;
 					transition: all 0.3s ease;
-					background: url('../../../assets/images/notactive.png') 0 0 no-repeat;
+					background: url('../../../assets/images/notactive.svg') 0 0 no-repeat;
 				}
 			}
 			& input[type='radio']:checked + label:before {
 				transition: all 0.3s ease;
 
-				background: url('../../../assets/images/active.png') 0 0 no-repeat;
+				background: url('../../../assets/images/active.svg') 0 0 no-repeat;
 			}
 		}
 	}
