@@ -11,7 +11,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, defineProps, defineEmits } from 'vue';
+import { computed, defineEmits, defineProps, ref } from 'vue';
 
 const props = defineProps({
 	type: {
@@ -57,6 +57,7 @@ const buttonClass = computed(() => ({
 	'btn-find': props.priority === 'find',
 	pressed: isPressed.value,
 	'btn-start': props.priority === 'start',
+  'btn-main': props.priority == 'main'
 }));
 </script>
 <style scoped lang="scss">
@@ -126,5 +127,24 @@ const buttonClass = computed(() => ({
 	width: 5px;
 	background: url('../../../assets/images/Icon.png');
 	height: 10px;
+}
+
+.btn-main {
+  background: linear-gradient(90.00deg, rgb(255, 153, 41),rgb(242, 84, 48));
+  -webkit-background-clip:
+  text;
+  -webkit-text-fill-color:
+  transparent;
+  background-clip:
+  text;
+  text-fill-color:
+  transparent;
+  font-family: Inter;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 17px;
+  letter-spacing: -3%;
+  text-align: left;
+  border: 1px #FF9929 solid;
 }
 </style>

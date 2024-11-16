@@ -1,6 +1,6 @@
 <template>
 	<nav>
-		<router-link to="/" @click="setSelectedTab('home')">
+		<router-link to="/choose-company" @click="setSelectedTab('home')">
 			<a :class="{ active: selectedTab === 'home' }">Главная</a>
 		</router-link>
 		<router-link to="/tarot-spread" @click="setSelectedTab('tarot')">
