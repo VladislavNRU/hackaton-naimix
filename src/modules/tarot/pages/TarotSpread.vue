@@ -2,8 +2,8 @@
 	<Navbar />
 	<div class="drag-drop-container">
 		<div class="info">
-				<p><strong>For:</strong>Company name</p>
-				<p><strong>Reader:</strong>User name</p>
+			<p><strong>For:</strong>Company name</p>
+			<p><strong>Reader:</strong>User name</p>
 		</div>
 		<div class="drop-zone" @dragover.prevent @drop="onDrop('target')">
 			<div
@@ -14,7 +14,7 @@
 				@dragstart="onDragStart('target', card)"
 				@dragend="onDragEnd"
 			>
-				<Card :name="card.name" />
+				<TarotCard :name="card.name" />
 			</div>
 		</div>
 
@@ -28,13 +28,13 @@
 				@dragend="onDragEnd"
 				:style="getTransform(index, source.length)"
 			>
-				<Card :name="card.name" />
+				<TarotCard :name="card.name" />
 			</div>
 		</div>
 	</div>
 </template>
 <script setup lang="ts">
-import Card from '@modules/core/components/Card.vue';
+import TarotCard from '@modules/tarot/components/TarotCard.vue';
 import Navbar from '@modules/core/components/Navbar.vue';
 import { useDraggable } from '@utils/useDraggable';
 import { ICard } from '@modules/tarot/types/card';
