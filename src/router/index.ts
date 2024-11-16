@@ -7,11 +7,11 @@ const routes: Array<RouteRecordRaw> = [
 		component: () => import('@/modules/core/pages/StartPage.vue'),
 		//meta: { requiresAuth: true, onlyAdmin: true },
 	},
-	// {
-	// 	path: '/login',
-	// 	name: 'login',
-	// 	component: () => import('@modules/auth/pages/AuthPage.vue'),
-	// },
+	{
+		path: '/login',
+		name: 'login',
+		component: () => import('@modules/auth/pages/AuthPage.vue'),
+	},
 	{
 		path: '/tarot-spread',
 		name: 'tarot-spread',
@@ -21,11 +21,6 @@ const routes: Array<RouteRecordRaw> = [
 		path: '/choose-company',
 		name: 'choose-company',
 		component: () => import('@modules/core/pages/Choose.vue'),
-	},
-	{
-		path: '/auth',
-		name: 'auth',
-		component: () => import('@modules/core/pages/AuthPage.vue'),
 	},
 	{
 		path: '/results',
