@@ -1,7 +1,7 @@
 <template>
 	<div class="container">
 		<div class="content">
-			<h1 class="title">The Card Diviner</h1>
+			<h1 class="title">The Card Diviner.</h1>
 			<span class="description">
 				Подберите идеальную команду или кандидата для вашей компании с помощью нашего уникального инструмента чтения
 				карт
@@ -13,7 +13,6 @@
 </template>
 <script setup lang="ts">
 import CardLayout from '@modules/core/components/CardLayout.vue';
-import Logo from '@modules/core/components/Logo.vue';
 import { useRouter } from 'vue-router';
 
 const router = useRouter();

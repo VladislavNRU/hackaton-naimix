@@ -4,5 +4,5 @@
 	</div>
 </template>
 <script setup lang="ts">
-import cardBack from '../../../assets/images/cardBack.svg';
+import cardBack from '@assets/images/cardBack.svg';
 </script>
