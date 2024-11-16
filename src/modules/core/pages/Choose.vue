@@ -8,7 +8,7 @@
 			<h1 class="choose-title">Выберите компанию</h1>
 			<Input class="input-custom" />
 			<CompanyCard class="company-card" />
-			<DropdownCheckbox class="checkbox" />
+			<DropdownCheckbox :isOpen="isOpen" class="checkbox" />
 			<CustomButton class="button-second" type="button" priority="find" text="Найти" />
 		</div>
 	</div>
@@ -22,6 +22,7 @@ import CompanyCard from '@modules/core/components/CompanyCard.vue';
 import Input from '@modules/core/components/Input.vue';
 import Logo from '@modules/core/components/Logo.vue';
 import Navbar from '@modules/core/components/Navbar.vue';
+const isOpen = false;
 </script>
 
 <style scoped>
@@ -57,9 +58,12 @@ import Navbar from '@modules/core/components/Navbar.vue';
 	margin-bottom: 50px;
 }
 .button-second {
-	margin-top: 40px;
+	margin-top: 100px;
 	color: #fff;
 	width: 100%;
 	padding: 10px;
+}
+.button-second.open {
+	color: aqua;
 }
 </style>
