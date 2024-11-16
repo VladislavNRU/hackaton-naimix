@@ -1,27 +1,43 @@
 <template>
 	<div>
-		<label class="checkbox-rel">
+		<label :isOpen="isOpen" @update:isOpen="isOpen = $event" class="checkbox-rel">
 			<input class="checkbox" type="checkbox" v-model="isOpen" />
-			Расклад для сотрудников
+			<div v-if="!selectedOption">Расклад для сотрудников</div>
+			<div class="employee" v-else>
+				<p>Выбранный сотрудник: {{ selectedOption }}</p>
+			</div>
 			<span class="checkmark"></span>
 		</label>
-		<transition name="fade">
-			<ul v-if="isOpen" ref="list">
-				<CompanyCard />
-			</ul>
-		</transition>
+
+		<CustomSelect
+			:isOpen="isOpen"
+			@update:isOpen="isOpen = $event"
+			:options="options"
+			@update:selectedOption="selectedOption = $event"
+		/>
 	</div>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import CompanyCard from './CompanyCard.vue';
-
+import CustomSelect from './CustomSelect.vue';
 const isOpen = ref(false);
-const items = ref(['Пункт 1', 'Пункт 2', 'Пункт 3', 'Пункт 4']);
+const props = defineProps<{
+	isOpen: boolean;
+}>();
+const selectedOption = ref<string | null>(null);
+const options = ref([
+	'Иванов Иван Иванович',
+	'Неиванов Неиван Неиванович',
+	'Петров Петр Петрович',
+	'Непетров Непетр Непетрович',
+]);
 </script>
 
 <style scoped>
+.employee {
+	text-align: start;
+}
 .checkbox {
 	flex-direction: column;
 	& label {

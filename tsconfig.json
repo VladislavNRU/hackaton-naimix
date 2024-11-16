@@ -15,7 +15,8 @@
 			"@/*": ["src/*"],
 			"@assets/*": ["src/assets/*"],
 			"@modules/*": ["src/modules/*"],
-			"@router/*": ["src/router/*"],
+			"@router/*": ["src/plugins/router/*"],
+			"@plugins/*": ["src/plugins/*"],
 			"@services/*": ["src/services/*"],
 			"@utils/*": ["src/utils/*"]
 		},

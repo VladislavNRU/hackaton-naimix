@@ -18,6 +18,11 @@ const routes: Array<RouteRecordRaw> = [
 		component: () => import('@/modules/tarot/pages/TarotSpread.vue'),
 	},
 	{
+		path: '/questions',
+		name: 'questions',
+		component: () => import('@/modules/core/pages/QuestionsPage.vue'),
+	},
+	{
 		path: '/choose-company',
 		name: 'choose-company',
 		component: () => import('@modules/core/pages/Choose.vue'),
@@ -31,6 +36,11 @@ const routes: Array<RouteRecordRaw> = [
 		path: '/results',
 		name: 'results',
 		component: () => import('@modules/results/pages/ResultPage.vue'),
+	},
+	{
+		path: '/details',
+		name: 'details',
+		component: () => import('@modules/details/pages/DetailsPage.vue'),
 	},
 	{
 		path: '/:pathMatch(.*)*',
