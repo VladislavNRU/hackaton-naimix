@@ -1,7 +1,4 @@
 <template>
-	<div class="logo">
-		<Logo />
-	</div>
 	<div class="container">
 		<div class="content">
 			<h1 class="title">The Card Diviner</h1>

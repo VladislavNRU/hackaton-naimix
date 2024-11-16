@@ -15,7 +15,7 @@ const routes: Array<RouteRecordRaw> = [
 	{
 		path: '/tarot-spread',
 		name: 'tarot-spread',
-		component: () => import('@modules/core/pages/TarotSpread.vue'),
+		component: () => import('@/modules/tarot/pages/TarotSpread.vue'),
 	},
 	{
 		path: '/:pathMatch(.*)*',

@@ -31,10 +31,15 @@ export function useDraggable<T>() {
 		draggedFrom.value = null;
 	};
 
+	const onDragEnd = () => {
+		draggedItem.value = null;
+	};
+
 	return {
 		source,
 		target,
 		onDragStart,
 		onDrop,
+		onDragEnd
 	};
 }

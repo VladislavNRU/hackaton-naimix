@@ -19,7 +19,7 @@ import logo from '../../../assets/images/Logo.svg';
 		font-size: 1.5rem;
 		font-weight: bold;
 		text-align: center;
-		color: #353535;
+		color: $secondary-color;
 		margin: 0 auto;
 	}
 

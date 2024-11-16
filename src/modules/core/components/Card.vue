@@ -1,6 +1,6 @@
 <template>
 	<div class="card">
-		<img :src="cardBack" alt="Card Back" width="300" height="200" />
+		<img :src="cardBack" alt="Card Back" width="150" />
 	</div>
 </template>
 <script setup lang="ts">
