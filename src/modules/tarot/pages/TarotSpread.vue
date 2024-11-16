@@ -13,8 +13,10 @@
 				draggable="true"
 				@dragstart="onDragStart('target', card)"
 				@dragend="onDragEnd"
+				@click="flipCard(card)"
+				:class="{ flipped: card.isFlipped }"
 			>
-				<TarotCard :name="card.name" />
+				<TarotCard :name="card.name" :isFlipped="card.isFlipped" :frontImage="card.frontImage" />
 			</div>
 		</div>
 
@@ -28,47 +30,31 @@
 				@dragend="onDragEnd"
 				:style="getTransform(index, source.length)"
 			>
-				<TarotCard :name="card.name" />
+				<TarotCard :name="card.name" :isFlipped="false" :frontImage="card.frontImage" />
 			</div>
 		</div>
 	</div>
 </template>
+
 <script setup lang="ts">
 import TarotCard from '@modules/tarot/components/TarotCard.vue';
 import Navbar from '@modules/core/components/Navbar.vue';
 import { useDraggable } from '@utils/useDraggable';
 import { ICard } from '@modules/tarot/types/card';
 import useCardRotation from '@modules/tarot/hooks/useCardRotation';
+import { useTarotApi } from '../hooks/useTarotApi';
 
 const { source, target, onDragStart, onDrop, onDragEnd } = useDraggable<ICard>();
+const { generateCards } = useTarotApi();
+source.value = generateCards();
+
 const { getTransform } = useCardRotation();
 
-source.value = [
-	{ id: 'card1', name: 'Card 1' },
-	{ id: 'card2', name: 'Card 2' },
-	{ id: 'card3', name: 'Card 3' },
-	{ id: 'card4', name: 'Card 4' },
-	{ id: 'card5', name: 'Card 1' },
-	{ id: 'card6', name: 'Card 2' },
-	{ id: 'card7', name: 'Card 3' },
-	{ id: 'card8', name: 'Card 4' },
-	{ id: 'card9', name: 'Card 1' },
-	{ id: 'card10', name: 'Card 2' },
-	{ id: 'card11', name: 'Card 3' },
-	{ id: 'card12', name: 'Card 4' },
-	{ id: 'card13', name: 'Card 3' },
-	{ id: 'card14', name: 'Card 4' },
-	{ id: 'card15', name: 'Card 1' },
-	{ id: 'card16', name: 'Card 2' },
-	{ id: 'card17', name: 'Card 3' },
-	{ id: 'card18', name: 'Card 4' },
-	{ id: 'card19', name: 'Card 1' },
-	{ id: 'card20', name: 'Card 2' },
-	{ id: 'card21', name: 'Card 3' },
-	{ id: 'card22', name: 'Card 4' },
-];
+const flipCard = (card: ICard) => {
+	card.isFlipped = !card.isFlipped;
+};
 </script>
-<style scoped>
+<style scoped lang="scss">
 .drag-drop-container {
 	display: flex;
 	flex-direction: column-reverse;
@@ -99,11 +85,6 @@ source.value = [
 	bottom: 0;
 	transform-origin: 50% 300%;
 	transition: transform 0.3s ease;
-}
-
-.deck .card:hover {
-	cursor: grab;
-	transform: scale(1.05);
 }
 
 .drop-zone {
