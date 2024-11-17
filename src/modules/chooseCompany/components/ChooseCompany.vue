@@ -1,4 +1,5 @@
 <template>
+	<Loader v-if="isLoading" />
 	<div class="form-container">
 		<div class="select-item">
 			<Select
@@ -47,10 +48,24 @@
 			></Select>
 		</div>
 		<div v-if="!selectedMode">
-			<Input style="width: 460px" label="ФИО" placeholder="Введите ваше ФИО" />
-			<Input label="Телефон" placeholder="Введите ваш телефон" />
+			<Input
+				style="width: 460px"
+				label="ФИО"
+				placeholder="Введите ваше ФИО"
+				:model-value="addedName"
+				@update:model-value="onUpdateAddedName"
+			/>
+			<Input label="Телефон" placeholder="Введите ваш телефон" :model-value="addedPhone" @update:model-value="onUpdateAddedPhone"/>
+			<Button
+				class="button-candidate"
+				type="submit"
+				priority="find"
+				text="Добавить кандидата"
+				@click="onSubmit"
+			/>
 		</div>
 		<Button
+			v-if="selectedMode"
 			class="button-second"
 			type="submit"
 			priority="find"
@@ -69,6 +84,8 @@ import Select from '@modules/core/components/Select.vue';
 import { ICompany } from '../types/company';
 import { IUser } from '@/modules/core/types/user';
 import { useRouter } from 'vue-router';
+import { useUserApi } from '@/modules/core/hooks/useUserApi';
+import Loader from '@/modules/core/components/Loader.vue';
 
 const router = useRouter();
 const props = defineProps({
@@ -82,10 +99,15 @@ const props = defineProps({
 	},
 });
 
+const { user, isLoading, createUser } = useUserApi();
+
 const selectedCompany = ref<ICompany | string>('');
 const selectedPersonTo = ref<IUser | string>('');
 const selectedPersonFrom = ref<IUser | string>('');
 const selectedMode = ref<number>(1);
+
+const addedPhone = ref<string>('');
+const addedName = ref<string>('');
 
 watchEffect(() => {
 	if (props.companies.length && !selectedCompany.value) {
@@ -97,11 +119,11 @@ const onUpdateCompany = (value: ICompany) => {
 	selectedCompany.value = value;
 };
 
-const onUpdatePersonFrom = (value: any) => {
+const onUpdatePersonFrom = (value: IUser) => {
 	selectedPersonFrom.value = value;
 };
 
-const onUpdatePersonTo = (value: any) => {
+const onUpdatePersonTo = (value: IUser) => {
 	selectedPersonTo.value = value;
 };
 
@@ -109,30 +131,26 @@ const onUpdateMode = (value: number) => {
 	selectedMode.value = value;
 };
 
-const onSubmit = () => {
-	localStorage.setItem('selectedCompany', JSON.stringify(selectedCompany.value));
-	localStorage.setItem('personFrom', JSON.stringify(selectedPersonFrom.value));
-	localStorage.setItem('personTo', JSON.stringify(selectedPersonTo.value));
+const onUpdateAddedName = (value: string) => {
+	addedName.value = value;
+}
+
+const onUpdateAddedPhone = (value: string) => {
+	addedPhone.value = value;
+}
+
+const onSubmit = async () => {
+	if (!selectedMode.value) {
+		await createUser({ name: addedName.value, phone: addedPhone.value });
+		localStorage.setItem('personTo', JSON.stringify(user.value));
+	} else {
+		localStorage.setItem('personTo', JSON.stringify(selectedPersonTo.value));
+		localStorage.setItem('personFrom', JSON.stringify(selectedPersonFrom.value));
+	}
+	localStorage.setItem('companyFrom', JSON.stringify(selectedCompany.value));
 	router.push('/questions');
 };
-
-// const filteredEmployeesFrom = computed(() => {
-// 	if (selectedCompany.value) {
-// 		const company = props.companies.find(c => c.name === selectedCompany.value);
-// 		return company?.employees || [];
-// 	}
-// 	return [];
-// });
-
-// const filteredEmployeesTo = computed(() => {
-// 	if (selectedCompany.value) {
-// 		const company = props.companies.find(c => c.name === selectedCompany.value);
-// 		return company?.employees || [];
-// 	}
-// 	return [];
-// });
 </script>
-
 <style scoped lang="scss">
 .form-container {
 	width: 100%;
@@ -145,6 +163,12 @@ const onSubmit = () => {
 
 .button-second {
 	margin-top: 40px;
+	color: #fff;
+	width: 460px;
+	padding: 10px;
+}
+
+.button-candidate {
 	color: #fff;
 	width: 460px;
 	padding: 10px;

@@ -16,5 +16,8 @@ export default Object.freeze({
 	},
 	company: `${BASE_URL}/companies`,
 	question: `${BASE_URL}/questions`,
-	characteristic: `${BASE_URL}/characteristics`,
+	characteristic: {
+		base: `${BASE_URL}/characteristics`,
+		save: (companyId: number) => `${BASE_URL}/characteristics/save/companies/${companyId}`, 
+	},
 });

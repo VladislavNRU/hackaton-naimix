@@ -39,12 +39,15 @@ import { ref, computed, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { useCharacteristicApi } from '../hooks/useCharacteristicApi';
 import Loader from '@/modules/core/components/Loader.vue';
+import { ICompany } from '@/modules/chooseCompany/types/company';
+import { ICharacteristicProccessed } from '../types/characteristic';
 
 const router = useRouter();
 
-const { isLoading, characteristics, loadCharacteristics } = useCharacteristicApi();
+const { isLoading, characteristics, loadCharacteristics, saveCharacteristics } =
+	useCharacteristicApi();
 
-const answers = ref<Record<number, Record<number, number>>>({});
+const answers = ref<ICharacteristicProccessed>({});
 
 const totalQuestions = computed(() => {
 	return characteristics.value.reduce(
@@ -56,7 +59,7 @@ const totalQuestions = computed(() => {
 const getQuestionNumber = (characteristicIndex: number, questionIndex: number) => {
 	return (
 		characteristics.value
-			.slice(0, characteristicIndex) // Берем все предыдущие характеристики
+			.slice(0, characteristicIndex)
 			.reduce((total, characteristic) => total + characteristic.questions.length, 0) +
 		questionIndex +
 		1
@@ -64,24 +67,23 @@ const getQuestionNumber = (characteristicIndex: number, questionIndex: number) =
 };
 
 const isAllAnswered = computed(() => {
-	return Object.keys(answers.value).every(characteristicId => {
-		const characteristic = characteristics.value.find(c => c.id === +characteristicId);
-		return characteristic?.questions.every(
-			(_, index) => answers.value[characteristicId]?.[index] !== null
-		);
+	return characteristics.value.every(characteristic => {
+		const characteristicAnswers = answers.value[characteristic.id];
+		if (!characteristicAnswers) return false;
+		return characteristic.questions.every((_, index) => characteristicAnswers[index] !== null);
 	});
 });
 
 function handleAnswer(characteristicId: number, questionIndex: number, rating: number) {
 	if (!answers.value[characteristicId]) {
-		answers.value[characteristicId] = {};
+		answers.value[characteristicId] = 0;
 	}
-	answers.value[characteristicId][questionIndex] = rating;
+	answers.value[characteristicId] += rating;
 }
 
-function saveAnswers() {
-	console.log('Ответы сохранены:', answers.value);
-
+async function saveAnswers() {
+	const company: ICompany = JSON.parse(localStorage.getItem('companyFrom'));
+	await saveCharacteristics(answers.value, company.id);
 	router.push('/tarot-spread');
 }
 

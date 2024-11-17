@@ -1,7 +1,7 @@
 <template>
 	<div class="info">
-		<p><strong>From:</strong> {{ targetFrom }}</p>
-		<p><strong>To:</strong> {{ targetTo }}</p>
+		<p><strong>С кем сравниваем:</strong> {{ targetFrom }}</p>
+		<p><strong>Кого сравниваем:</strong> {{ targetTo }}</p>
 	</div>
 </template>
 <script setup lang="ts">

@@ -3,14 +3,14 @@
 	<Loader v-if="isLoading" />
 	<div class="drag-drop-container">
 		<ParticipantInfo
-			v-if="personFrom && personTo"
-			:targetTo="personTo.name"
-			:targetFrom="personFrom.name"
+			v-if="personTo && (personFrom || companyFrom)"
+			:targetTo="personTo?.name || ''"
+			:targetFrom="personFrom?.name || companyFrom?.name || ''"
 		/>
 		<TarotResult
 			v-if="showResult"
 			:showResult="showResult"
-			:score="savedSpread.score"
+			:score="savedResult.score"
 			@close-result="showResult = false"
 		/>
 		<div class="drop-zone" @dragover.prevent @drop="onDrop('target')">
@@ -60,29 +60,37 @@ import Loader from '@/modules/core/components/Loader.vue';
 import { IUser } from '@/modules/core/types/user';
 
 const { source, target, onDragStart, onDrop, onDragEnd } = useDraggable<ICard>();
-const { cards, loadCards, isLoading, saveSpread, savedSpread } = useTarotApi();
+const { cards, loadCards, isLoading, saveSpread, savedResult } = useTarotApi();
 const { getTransform } = useCardRotation();
-
+console.log(
+	localStorage.getItem('personFrom')
+		? JSON.parse(localStorage.getItem('personFrom') as string)
+		: null
+);
 const personFrom: IUser = localStorage.getItem('personFrom')
 	? JSON.parse(localStorage.getItem('personFrom') as string)
 	: null;
 const personTo: IUser = localStorage.getItem('personTo')
 	? JSON.parse(localStorage.getItem('personTo') as string)
 	: null;
+const companyFrom: IUser = localStorage.getItem('companyFrom')
+	? JSON.parse(localStorage.getItem('companyFrom') as string)
+	: null;
+
 const flipCard = (card: ICard) => {
 	card.isFlipped = !card.isFlipped;
 };
 
 const showResult = ref(false);
 
-const handleResult = () => {
-	showResult.value = true;
-	saveSpread({
+const handleResult = async () => {
+	await saveSpread({
 		targetToId: personTo.id,
-		targetFromId: 1,
-		isCompany: true,
+		targetFromId: personFrom?.id ?? companyFrom.id,
+		isCompany: !personFrom?.id,
 		cards: target.value.map(card => card.id),
 	});
+	showResult.value = true;
 };
 
 onMounted(async () => {

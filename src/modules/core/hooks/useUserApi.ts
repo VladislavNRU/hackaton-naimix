@@ -38,8 +38,8 @@ export const useUserApi = () => {
 		try {
 			isLoading.value = true;
 			const path = api.user.base;
-			const response = await HttpExecutor.post<IUserRequest, IUserResponse>(path, data);
-			if (!Array.isArray(response.content)) user.value = response.content;
+			const response = await HttpExecutor.post<IUserRequest, IUser>(path, data);
+			user.value = response;
 		} catch (error) {
 			console.error(error);
 		} finally {
@@ -48,7 +48,9 @@ export const useUserApi = () => {
 	};
 
 	return {
+		isLoading,
 		users,
+		user,
 		getUsersByRole,
 		createUser,
 		loadUsers: getUsers,

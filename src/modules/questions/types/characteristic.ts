@@ -10,6 +10,8 @@ export interface ICharacteristic {
 	questions: IQuestion[];
 }
 
+export type ICharacteristicProccessed = Record<number, number>;
+
 export interface ICharacteristicResponse {
 	content: ICharacteristic[];
 }
