@@ -1,88 +1,18 @@
 <template>
 	<Navbar />
-	<Table :rows="tableData" />
+	<Loader v-if="isLoading" />
+	<Table :rows="savedSpreads" />
 </template>
 <script setup lang="ts">
 import Navbar from '@/modules/core/components/Navbar.vue';
+import { useTarotApi } from '@/modules/core/hooks/useTarotApi';
 import Table from '@modules/results/components/Table.vue';
-interface TableRow {
-	id: number;
-	targetTo: string;
-	targetFrom: string;
-	score: number;
-}
+import Loader from '@/modules/core/components/Loader.vue';
+import { onMounted } from 'vue';
 
-const tableData: TableRow[] = [
-	{
-		id: 1,
-		targetTo: 'Иванов Алексей Владимирович',
-		targetFrom: 'Смирнов Дмитрий Сергеевич',
-		score: 70,
-	},
-	{ id: 2, targetTo: 'Дегтярев Алексей Владимирович', targetFrom: 'Газпром', score: 50 },
-	{
-		id: 3,
-		targetTo: 'Кузнецова Ольга Сергеевна',
-		targetFrom: 'Беляева Анастасия Андреевна',
-		score: 30,
-	},
-	{
-		id: 4,
-		targetTo: 'Иванов Алексей Владимирович',
-		targetFrom: 'Смирнов Дмитрий Сергеевич',
-		score: 70,
-	},
-	{ id: 5, targetTo: 'Дегтярев Алексей Владимирович', targetFrom: 'Газпром', score: 50 },
-	{
-		id: 6,
-		targetTo: 'Кузнецова Ольга Сергеевна',
-		targetFrom: 'Беляева Анастасия Андреевна',
-		score: 30,
-	},
-	{
-		id: 7,
-		targetTo: 'Иванов Алексей Владимирович',
-		targetFrom: 'Смирнов Дмитрий Сергеевич',
-		score: 70,
-	},
-	{ id: 8, targetTo: 'Дегтярев Алексей Владимирович', targetFrom: 'Газпром', score: 50 },
-	{
-		id: 9,
-		targetTo: 'Кузнецова Ольга Сергеевна',
-		targetFrom: 'Беляева Анастасия Андреевна',
-		score: 30,
-	},
-	{
-		id: 3,
-		targetTo: 'Кузнецова Ольга Сергеевна',
-		targetFrom: 'Беляева Анастасия Андреевна',
-		score: 30,
-	},
-	{
-		id: 4,
-		targetTo: 'Иванов Алексей Владимирович',
-		targetFrom: 'Смирнов Дмитрий Сергеевич',
-		score: 70,
-	},
-	{ id: 5, targetTo: 'Дегтярев Алексей Владимирович', targetFrom: 'Газпром', score: 50 },
-	{
-		id: 6,
-		targetTo: 'Кузнецова Ольга Сергеевна',
-		targetFrom: 'Беляева Анастасия Андреевна',
-		score: 30,
-	},
-	{
-		id: 7,
-		targetTo: 'Иванов Алексей Владимирович',
-		targetFrom: 'Смирнов Дмитрий Сергеевич',
-		score: 70,
-	},
-	{ id: 8, targetTo: 'Дегтярев Алексей Владимирович', targetFrom: 'Газпром', score: 50 },
-	{
-		id: 9,
-		targetTo: 'Кузнецова Ольга Сергеевна',
-		targetFrom: 'Беляева Анастасия Андреевна',
-		score: 30,
-	},
-];
+const { isLoading, savedSpreads, loadSavedSpreads } = useTarotApi();
+
+onMounted(() => {
+	if (!savedSpreads.value.length) loadSavedSpreads();
+});
 </script>

@@ -1,13 +1,20 @@
 import { ref } from 'vue';
-import { ICard, ICardResponse } from '../types/card';
+import { ICard, ICardResponse } from '../../tarot/types/card';
 import api from '@/services/api';
 import HttpExecutor from '@/services/HttpExecutor';
-import { ISavedSpread, ISpread, ISpreadRequest, ISpreadResponse } from '../types/spread';
+import {
+	ISavedResult,
+	ISavedSpreadResponse,
+	ISavedSpread,
+	ISpread,
+	ISpreadRequest,
+} from '../types/spread';
 
 export function useTarotApi() {
 	const isLoading = ref(false);
 	const cards = ref<ICard[]>([]);
-	const savedSpread = ref<ISavedSpread | null>(null);
+	const savedResult = ref<ISavedResult | null>(null);
+	const savedSpreads = ref<ISavedSpread[]>([]);
 
 	const shuffleCards = (array: ICard[]) => {
 		for (let i = array.length - 1; i > 0; i--) {
@@ -33,10 +40,23 @@ export function useTarotApi() {
 	const saveSpread = async (spread: ISpread) => {
 		try {
 			isLoading.value = true;
-			const path = api.spread;
-			const response = await HttpExecutor.post<ISpreadRequest, ISavedSpread>(path, spread);
-			console.log(response)
-			savedSpread.value = response;
+			const path = api.spread.base;
+			const response = await HttpExecutor.post<ISpreadRequest, ISavedResult>(path, spread);
+			console.log(response);
+			savedResult.value = response;
+		} catch (error) {
+			console.error(error);
+		} finally {
+			isLoading.value = false;
+		}
+	};
+
+	const getSavedSpreads = async () => {
+		try {
+			isLoading.value = true;
+			const path = api.spread.all;
+			const response = await HttpExecutor.get<ISavedSpreadResponse>(path);
+			savedSpreads.value = response.content;
 		} catch (error) {
 			console.error(error);
 		} finally {
@@ -47,7 +67,9 @@ export function useTarotApi() {
 	return {
 		cards,
 		loadCards: getCards,
-		savedSpread,
+		savedResult,
+		savedSpreads,
+		loadSavedSpreads: getSavedSpreads,
 		saveSpread,
 		isLoading,
 	};

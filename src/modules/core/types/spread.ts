@@ -5,13 +5,24 @@ export interface ISpread {
 	cards: number[];
 }
 
-export interface ISavedSpread {
+export interface ISavedResult {
 	id: number;
 	score: number;
 }
 
+export interface ISavedSpread {
+	id: number;
+	score: number;
+	targetTo: string;
+	targetFrom: string;
+}
+
+export interface ISavedSpreadResponse {
+	content: ISavedSpread[];
+}
+
 export interface ISpreadResponse {
-	content: ISavedSpread;
+	content: ISavedResult;
 }
 
 export interface ISpreadRequest extends ISpread {}

@@ -54,7 +54,7 @@ import TarotResult from '@modules/tarot/components/TarotResult.vue';
 import { useDraggable } from '@utils/useDraggable';
 import { ICard } from '@modules/tarot/types/card';
 import useCardRotation from '@modules/tarot/hooks/useCardRotation';
-import { useTarotApi } from '../hooks/useTarotApi';
+import { useTarotApi } from '../../core/hooks/useTarotApi';
 import { ref, onMounted } from 'vue';
 import Loader from '@/modules/core/components/Loader.vue';
 import { IUser } from '@/modules/core/types/user';

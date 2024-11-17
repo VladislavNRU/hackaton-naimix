@@ -6,7 +6,10 @@ export default Object.freeze({
 		signup: `${BASE_URL}/auth/signup`,
 	},
 	cards: `${BASE_URL}/cards`,
-	spread: `${BASE_URL}/trumps`,
+	spread: {
+		base: `${BASE_URL}/trumps`,
+		all: `${BASE_URL}/trumps/all`,
+	},
 	user: {
 		base: `${BASE_URL}/users`,
 		all: `${BASE_URL}/users/all`,
