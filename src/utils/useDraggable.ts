@@ -3,7 +3,7 @@ import { ref } from 'vue';
 export function useDraggable<T>() {
 	const source = ref<T[]>([]);
 	const target = ref<T[]>([]);
-
+	console.log(source.value)
 	const draggedItem = ref<T | null>(null);
 	const draggedFrom = ref<'source' | 'target' | null>(null);
 

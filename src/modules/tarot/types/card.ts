@@ -6,3 +6,7 @@ export interface ICard {
 	description: string;
 	isFlipped?: boolean;
 }
+
+export interface ICardResponse {
+	content: ICard[];
+}

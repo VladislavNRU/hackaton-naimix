@@ -16,12 +16,11 @@
 	</nav>
 </template>
 <script setup lang="ts">
-import { ref, computed, watch } from 'vue';
+import { computed } from 'vue';
 import { useRoute } from 'vue-router';
 
 const route = useRoute();
 
-// Вычисляемый параметр для selectedTab
 const selectedTab = computed(() => {
 	switch (route.path) {
 		case '/choose-company':
@@ -33,7 +32,7 @@ const selectedTab = computed(() => {
 		case '/results':
 			return 'results';
 		default:
-			return 'home'; // Значение по умолчанию
+			return 'home';
 	}
 });
 </script>

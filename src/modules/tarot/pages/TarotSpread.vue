@@ -1,11 +1,9 @@
 <template>
 	<Navbar />
+	<Loader v-if="isLoading"/>
 	<div class="drag-drop-container">
 		<ParticipantInfo :targetTo="targetTo" :targetFrom="targetFrom" />
 		<TarotResult v-if="showResult" :showResult="showResult" @close-result="showResult = false" />
-		<button v-if="target.length === 0" @click="showTarotResult" class="finish-button">
-			Завершить расклад
-		</button>
 		<div class="drop-zone" @dragover.prevent @drop="onDrop('target')">
 			<div
 				v-for="card in target"
@@ -20,9 +18,12 @@
 				<TarotCard :id="card.id" :name="card.name" :isFlipped="card.isFlipped" />
 			</div>
 		</div>
-
 		<div class="deck">
+			<button v-if="target.length === 5" @click="showTarotResult" class="finish-button">
+				Завершить расклад
+			</button>
 			<div
+				v-else
 				v-for="(card, index) in source"
 				:key="card.id"
 				class="card"
@@ -36,23 +37,23 @@
 		</div>
 	</div>
 </template>
-
 <script setup lang="ts">
 import TarotCard from '@modules/tarot/components/TarotCard.vue';
 import Navbar from '@modules/core/components/Navbar.vue';
-import ParticipantInfo from '@modules/tarot/components/ParticipantInfo.vue'; // Импортируем компонент
-import TarotResult from '@modules/tarot/components/TarotResult.vue'; // Импортируем компонент
+import ParticipantInfo from '@modules/tarot/components/ParticipantInfo.vue';
+import TarotResult from '@modules/tarot/components/TarotResult.vue';
 import { useDraggable } from '@utils/useDraggable';
 import { ICard } from '@modules/tarot/types/card';
 import useCardRotation from '@modules/tarot/hooks/useCardRotation';
 import { useTarotApi } from '../hooks/useTarotApi';
 import { ref, onMounted } from 'vue';
+import Loader from '@/modules/core/components/Loader.vue';
 
 const targetTo = ref('Смолов Илья Александрович');
 const targetFrom = ref('Иванов Денис Петрович');
 
 const { source, target, onDragStart, onDrop, onDragEnd } = useDraggable<ICard>();
-const { cards, loadCards } = useTarotApi();
+const { cards, loadCards, isLoading } = useTarotApi();
 const { getTransform } = useCardRotation();
 
 const flipCard = (card: ICard) => {
@@ -65,9 +66,11 @@ const showTarotResult = () => {
 	showResult.value = true;
 };
 
-onMounted(() => {
-	//if (!cards.value.length) loadCards();
-	source.value = cards.value;
+onMounted(async () => {
+	if (!cards.value.length) {
+		await loadCards();
+		source.value = cards.value;
+	}
 });
 </script>
 
@@ -133,10 +136,10 @@ onMounted(() => {
 	transform: scale(1.02);
 }
 
-/* Стиль кнопки завершения расклада */
 .finish-button {
 	position: absolute;
-	bottom: 10%;
+	bottom: 30%;
+	width: 400px;
 	left: 50%;
 	transform: translateX(-50%);
 	background-color: #77b9b8;
@@ -145,7 +148,7 @@ onMounted(() => {
 	font-weight: bold;
 	padding: 12px 24px;
 	border: none;
-	border-radius: 5px;
+	border-radius: 15px;
 	cursor: pointer;
 	transition: background-color 0.3s;
 }
