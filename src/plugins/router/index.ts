@@ -20,7 +20,7 @@ const routes: Array<RouteRecordRaw> = [
 	{
 		path: '/questions',
 		name: 'questions',
-		component: () => import('@/modules/core/pages/QuestionsPage.vue'),
+		component: () => import('@modules/questions/pages/QuestionPage.vue'),
 	},
 	{
 		path: '/choose-company',

@@ -9,7 +9,7 @@
 			<Button
 				type="button"
 				priority="main"
-				text="Начать расклада "
+				text="Начать расклад"
 				@click="router.push('/tarot-spread')"
 				class="start-button"
 			/>

@@ -8,7 +8,7 @@
 						<p class="form-text">Добро пожаловать! Пожалуйста, введите свои данные</p>
 						<CustomLi label="E-mail" class="form-input" />
 						<CustomLi label="Телефон" class="form-input" />
-						<CustomLi label="Фамилия Имя Отчество" class="form-input" />
+						<CustomLi label="ФИО" class="form-input" />
 						<Button class="form-btn" type="submit" priority="find" text="Войти" />
 					</form>
 				</div>
@@ -21,8 +21,8 @@
 </template>
 
 <script setup lang="ts">
-import Button from '../components/Button.vue';
-import CustomLi from '../components/CustomLi.vue';
+import Button from '@modules/core/components/Button.vue';
+import CustomLi from '@modules/core/components/CustomLi.vue';
 </script>
 
 <style scoped lang="scss">

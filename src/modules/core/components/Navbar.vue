@@ -6,8 +6,8 @@
 		<router-link to="/tarot-spread" @click="setSelectedTab('tarot')">
 			<a :class="{ active: selectedTab === 'tarot' }">Расклад</a>
 		</router-link>
-		<router-link to="/details" @click="setSelectedTab('favorite')">
-			<a :class="{ active: selectedTab === 'favorite' }">Избранное</a>
+		<router-link to="/questions" @click="setSelectedTab('question')">
+			<a :class="{ active: selectedTab === 'question' }">Опросник</a>
 		</router-link>
 		<router-link to="/results" @click="setSelectedTab('results')">
 			<a :class="{ active: selectedTab === 'results' }">Результаты</a>
@@ -15,7 +15,6 @@
 		<div class="animation" :class="`start-${selectedTab}`"></div>
 	</nav>
 </template>
-
 <script setup>
 import { ref } from 'vue';
 
@@ -24,7 +23,6 @@ const setSelectedTab = tab => {
 	selectedTab.value = tab;
 };
 </script>
-
 <style lang="scss" scoped>
 nav {
 	margin-top: 1.5rem;
@@ -94,7 +92,7 @@ nav {
 		background-color: $info-color;
 	}
 
-	.start-favorite,
+	.start-question,
 	a:nth-child(3):hover ~ .animation,
 	a:nth-child(3).active ~ .animation {
 		width: 120px;

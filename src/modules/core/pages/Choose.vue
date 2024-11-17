@@ -18,7 +18,7 @@
 import CustomButton from '@modules/core/components/Button.vue';
 
 import DropdownCheckbox from '@modules/core/components/Checkbox.vue';
-import CompanyCard from '@modules/core/components/CompanyCard.vue';
+import CompanyCard from '@/modules/questions/components/SurveyCard.vue';
 import Input from '@modules/core/components/Input.vue';
 import Logo from '@modules/core/components/Logo.vue';
 import Navbar from '@modules/core/components/Navbar.vue';
