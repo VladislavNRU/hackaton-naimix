@@ -40,6 +40,6 @@ export function useDraggable<T>() {
 		target,
 		onDragStart,
 		onDrop,
-		onDragEnd
+		onDragEnd,
 	};
 }

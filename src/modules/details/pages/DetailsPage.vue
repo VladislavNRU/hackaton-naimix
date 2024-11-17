@@ -5,7 +5,7 @@
 				<div class="card-container">
 					<div class="card" v-for="(card, index) in cards" :key="index">
 						<img :src="cardBack" alt="Card" />
-            <div>{{ card }}</div>
+						<div>{{ card }}</div>
 					</div>
 				</div>
 			</div>
@@ -81,10 +81,10 @@ const cards = ['Дурак', 'Маг', 'Жрица', 'Сила', 'Фортуна
 .card-container {
 	display: flex;
 	justify-content: center;
-  flex-direction: row;
+	flex-direction: row;
 	gap: 30px;
 	flex-wrap: wrap;
-  text-align: center;
+	text-align: center;
 }
 
 .card img {

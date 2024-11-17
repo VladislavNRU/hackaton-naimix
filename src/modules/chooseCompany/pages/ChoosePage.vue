@@ -1,31 +1,35 @@
 <template>
 	<Navbar />
+	<Loader v-if="isLoading" />
 	<div class="logo">
 		<Logo />
 	</div>
 	<div class="container">
 		<div class="content">
 			<h1 class="choose-title">Выберите компанию</h1>
-			<Input class="input-custom" />
-			<CompanyCard name="Газпром" logo="" class="company-card" />
-			<DropdownCheckbox :isOpen="isOpen" class="checkbox" />
-			<CustomButton class="button-second" type="button" priority="find" text="Найти" />
+			<ChooseCompany :companies="companies" :users="users" />
+			
 		</div>
 	</div>
 </template>
-
 <script setup lang="ts">
-import CustomButton from '@modules/core/components/Button.vue';
-
-import DropdownCheckbox from '@modules/core/components/Checkbox.vue';
-import CompanyCard from '@modules/core/components/CompanyCard.vue';
-import Input from '@modules/core/components/Input.vue';
+import ChooseCompany from '../components/ChooseCompany.vue';
 import Logo from '@modules/core/components/Logo.vue';
 import Navbar from '@modules/core/components/Navbar.vue';
-const isOpen = false;
-</script>
+import { useCompanyApi } from '../hooks/useCompanyApi';
+import { onMounted } from 'vue';
+import Loader from '@/modules/core/components/Loader.vue';
+import { useUserApi } from '@/modules/core/hooks/useUserApi';
 
-<style scoped>
+const { isLoading, companies, loadComnpanies } = useCompanyApi();
+const { users, loadUsers } = useUserApi();
+
+onMounted(() => {
+	if (!companies.value.length) loadComnpanies();
+	if (!users.value.length) loadUsers();
+});
+</script>
+<style scoped lang="scss">
 .container {
 	display: flex;
 	flex-direction: column;
@@ -56,14 +60,5 @@ const isOpen = false;
 }
 .company-card {
 	margin-bottom: 50px;
-}
-.button-second {
-	margin-top: 100px;
-	color: #fff;
-	width: 100%;
-	padding: 10px;
-}
-.button-second.open {
-	color: aqua;
 }
 </style>

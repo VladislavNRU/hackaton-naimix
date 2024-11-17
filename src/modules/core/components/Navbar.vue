@@ -1,30 +1,41 @@
 <template>
 	<nav>
-		<router-link to="/choose-company" @click="setSelectedTab('home')">
+		<router-link to="/choose-company">
 			<a :class="{ active: selectedTab === 'home' }">Главная</a>
 		</router-link>
-		<router-link to="/tarot-spread" @click="setSelectedTab('tarot')">
+		<router-link to="/tarot-spread">
 			<a :class="{ active: selectedTab === 'tarot' }">Расклад</a>
 		</router-link>
-		<router-link to="/details" @click="setSelectedTab('favorite')">
-			<a :class="{ active: selectedTab === 'favorite' }">Избранное</a>
+		<router-link to="/questions">
+			<a :class="{ active: selectedTab === 'question' }">Опросник</a>
 		</router-link>
-		<router-link to="/results" @click="setSelectedTab('results')">
+		<router-link to="/results">
 			<a :class="{ active: selectedTab === 'results' }">Результаты</a>
 		</router-link>
 		<div class="animation" :class="`start-${selectedTab}`"></div>
 	</nav>
 </template>
+<script setup lang="ts">
+import { computed } from 'vue';
+import { useRoute } from 'vue-router';
 
-<script setup>
-import { ref } from 'vue';
+const route = useRoute();
 
-const selectedTab = ref('home');
-const setSelectedTab = tab => {
-	selectedTab.value = tab;
-};
+const selectedTab = computed(() => {
+	switch (route.path) {
+		case '/choose-company':
+			return 'home';
+		case '/tarot-spread':
+			return 'tarot';
+		case '/questions':
+			return 'question';
+		case '/results':
+			return 'results';
+		default:
+			return 'home';
+	}
+});
 </script>
-
 <style lang="scss" scoped>
 nav {
 	margin-top: 1.5rem;
@@ -94,7 +105,7 @@ nav {
 		background-color: $info-color;
 	}
 
-	.start-favorite,
+	.start-question,
 	a:nth-child(3):hover ~ .animation,
 	a:nth-child(3).active ~ .animation {
 		width: 120px;

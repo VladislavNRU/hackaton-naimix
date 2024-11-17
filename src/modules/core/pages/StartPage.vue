@@ -9,8 +9,8 @@
 			<Button
 				type="button"
 				priority="main"
-				text="Начать расклада "
-				@click="router.push('/tarot-spread')"
+				text="Начать расклад"
+				@click="router.push('/choose-company')"
 				class="start-button"
 			/>
 		</div>
