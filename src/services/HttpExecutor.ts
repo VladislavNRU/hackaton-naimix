@@ -19,7 +19,6 @@ class HttpExecutor {
 				console.error('Server error:', errorData);
 				throw errorData;
 			}
-
 			response.data = await response.json();
 			this.interceptors.response.resolve(response);
 			return response.data as OUT;

@@ -5,7 +5,7 @@
 			<span class="progress">Вопрос {{ currentQuestion }} из {{ totalQuestions }}</span>
 		</div>
 		<div class="question-container">
-			<span class="question-text">{{ question }}</span>
+			<span class="question-text">{{ question.question }}</span>
 		</div>
 		<div class="rating-container">
 			<button
@@ -21,21 +21,21 @@
 </template>
 <script setup lang="ts">
 import { ref, computed } from 'vue';
+import { IQuestion } from '../types/characteristic';
 
 const props = defineProps<{
-	question: string;
+	question: IQuestion;
 	currentQuestion: number;
 	totalQuestions: number;
-	onAnswer: (rating: number) => void;
 }>();
-
+const emit = defineEmits(['onAnswer']);
 const ratingScale = Array.from({ length: 10 }, (_, index) => index + 1);
 const selectedRating = ref<number | null>(null);
 const isAnswered = computed(() => selectedRating.value !== null);
 
 function selectRating(value: number) {
 	selectedRating.value = value;
-	props.onAnswer(value);
+	emit('onAnswer', value);
 }
 
 const getButtonClass = (value: number) => {
@@ -61,14 +61,13 @@ const getButtonClass = (value: number) => {
 	border-radius: 50px;
 	background-color: #f7f7f7;
 	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-	margin-bottom: 20px;
 	position: relative;
 	text-align: left;
 }
 
 .header {
 	display: flex;
-	justify-content: flex-start;
+	justify-content: center;
 	margin-bottom: 10px;
 	font-size: 16px;
 	font-weight: bold;

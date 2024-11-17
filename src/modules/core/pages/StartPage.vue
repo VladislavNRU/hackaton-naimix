@@ -10,7 +10,7 @@
 				type="button"
 				priority="main"
 				text="Начать расклад"
-				@click="router.push('/tarot-spread')"
+				@click="router.push('/choose-company')"
 				class="start-button"
 			/>
 		</div>

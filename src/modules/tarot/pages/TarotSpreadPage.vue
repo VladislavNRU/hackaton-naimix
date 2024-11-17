@@ -1,9 +1,18 @@
 <template>
 	<Navbar />
-	<Loader v-if="isLoading"/>
+	<Loader v-if="isLoading" />
 	<div class="drag-drop-container">
-		<ParticipantInfo :targetTo="targetTo" :targetFrom="targetFrom" />
-		<TarotResult v-if="showResult" :showResult="showResult" @close-result="showResult = false" />
+		<ParticipantInfo
+			v-if="personFrom && personTo"
+			:targetTo="personTo.name"
+			:targetFrom="personFrom.name"
+		/>
+		<TarotResult
+			v-if="showResult"
+			:showResult="showResult"
+			:score="savedSpread.score"
+			@close-result="showResult = false"
+		/>
 		<div class="drop-zone" @dragover.prevent @drop="onDrop('target')">
 			<div
 				v-for="card in target"
@@ -19,7 +28,7 @@
 			</div>
 		</div>
 		<div class="deck">
-			<button v-if="target.length === 5" @click="showTarotResult" class="finish-button">
+			<button v-if="target.length === 5" @click="handleResult" class="finish-button">
 				Завершить расклад
 			</button>
 			<div
@@ -48,22 +57,32 @@ import useCardRotation from '@modules/tarot/hooks/useCardRotation';
 import { useTarotApi } from '../hooks/useTarotApi';
 import { ref, onMounted } from 'vue';
 import Loader from '@/modules/core/components/Loader.vue';
-
-const targetTo = ref('Смолов Илья Александрович');
-const targetFrom = ref('Иванов Денис Петрович');
+import { IUser } from '@/modules/core/types/user';
 
 const { source, target, onDragStart, onDrop, onDragEnd } = useDraggable<ICard>();
-const { cards, loadCards, isLoading } = useTarotApi();
+const { cards, loadCards, isLoading, saveSpread, savedSpread } = useTarotApi();
 const { getTransform } = useCardRotation();
 
+const personFrom: IUser = localStorage.getItem('personFrom')
+	? JSON.parse(localStorage.getItem('personFrom') as string)
+	: null;
+const personTo: IUser = localStorage.getItem('personTo')
+	? JSON.parse(localStorage.getItem('personTo') as string)
+	: null;
 const flipCard = (card: ICard) => {
 	card.isFlipped = !card.isFlipped;
 };
 
 const showResult = ref(false);
 
-const showTarotResult = () => {
+const handleResult = () => {
 	showResult.value = true;
+	saveSpread({
+		targetToId: personTo.id,
+		targetFromId: 1,
+		isCompany: true,
+		cards: target.value.map(card => card.id),
+	});
 };
 
 onMounted(async () => {

@@ -1,4 +1,5 @@
 <template>
+	<Loader v-if="isLoading" />
 	<div class="content">
 		<div class="candidate-evaluation-page">
 			<div class="title">
@@ -8,15 +9,20 @@
 				</p>
 			</div>
 			<div class="questionnaire">
-				<SurveyCard
-					v-for="(question, index) in questions"
+				<div
+					v-for="(characteristic, index) in characteristics"
 					:key="index"
-					:question="question"
-					:currentQuestion="index + 1"
-					:totalQuestions="questions.length"
-					:onAnswer="rating => handleAnswer(index, rating)"
-					class="card"
-				/>
+					class="characteristic-card"
+				>
+					<div v-for="(question, qIndex) in characteristic.questions" :key="qIndex" class="card">
+						<SurveyCard
+							:question="question"
+							:currentQuestion="getQuestionNumber(index, qIndex)"
+							:totalQuestions="totalQuestions"
+							@onAnswer="rating => handleAnswer(characteristic.id, qIndex, rating)"
+						/>
+					</div>
+				</div>
 			</div>
 			<div class="actions">
 				<button class="save-button" :disabled="!isAllAnswered" @click="saveAnswers">
@@ -26,22 +32,51 @@
 		</div>
 	</div>
 </template>
+
 <script setup lang="ts">
 import SurveyCard from '@/modules/questions/components/SurveyCard.vue';
-import { useQuestionsApi } from '../hooks/useQuestionsApi';
-import { ref, computed } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
+import { useCharacteristicApi } from '../hooks/useCharacteristicApi';
+import Loader from '@/modules/core/components/Loader.vue';
 
 const router = useRouter();
 
-const { questions } = useQuestionsApi();
-const answers = ref<number[]>(new Array(questions.length).fill(null));
+const { isLoading, characteristics, loadCharacteristics } = useCharacteristicApi();
 
-const isAllAnswered = computed(() => answers.value.every(answer => answer !== null));
+const answers = ref<Record<number, Record<number, number>>>({});
 
-function handleAnswer(index: number, rating: number) {
-	answers.value[index] = rating;
-	console.log(`Ответ на вопрос ${index + 1}:`, rating);
+const totalQuestions = computed(() => {
+	return characteristics.value.reduce(
+		(sum, characteristic) => sum + characteristic.questions.length,
+		0
+	);
+});
+
+const getQuestionNumber = (characteristicIndex: number, questionIndex: number) => {
+	return (
+		characteristics.value
+			.slice(0, characteristicIndex) // Берем все предыдущие характеристики
+			.reduce((total, characteristic) => total + characteristic.questions.length, 0) +
+		questionIndex +
+		1
+	);
+};
+
+const isAllAnswered = computed(() => {
+	return Object.keys(answers.value).every(characteristicId => {
+		const characteristic = characteristics.value.find(c => c.id === +characteristicId);
+		return characteristic?.questions.every(
+			(_, index) => answers.value[characteristicId]?.[index] !== null
+		);
+	});
+});
+
+function handleAnswer(characteristicId: number, questionIndex: number, rating: number) {
+	if (!answers.value[characteristicId]) {
+		answers.value[characteristicId] = {};
+	}
+	answers.value[characteristicId][questionIndex] = rating;
 }
 
 function saveAnswers() {
@@ -49,7 +84,14 @@ function saveAnswers() {
 
 	router.push('/tarot-spread');
 }
+
+onMounted(() => {
+	if (!characteristics.value.length) {
+		loadCharacteristics();
+	}
+});
 </script>
+
 <style scoped lang="scss">
 .questionnaire {
 	margin-bottom: 20px;
@@ -62,6 +104,15 @@ function saveAnswers() {
 .title {
 	padding: 40px 0;
 }
+
+.characteristic-card {
+	margin-bottom: 30px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
+
 .card {
 	background: rgba(0, 0, 0, 0.05);
 	width: 800px;
@@ -75,17 +126,17 @@ function saveAnswers() {
 .actions {
 	display: flex;
 	justify-content: center;
-	margin-top: 20px;
 }
 
 .save-button {
 	background-color: $primary-color;
+	width: 300px;
 	color: white;
 	padding: 10px 20px;
-	margin-bottom: 20px;
 	font-size: 16px;
 	border: none;
-	border-radius: 5px;
+	margin-top: 10px;
+	border-radius: 15px;
 	cursor: pointer;
 	transition: background-color 0.3s ease;
 
