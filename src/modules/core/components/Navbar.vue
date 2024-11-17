@@ -1,27 +1,41 @@
 <template>
 	<nav>
-		<router-link to="/choose-company" @click="setSelectedTab('home')">
+		<router-link to="/choose-company">
 			<a :class="{ active: selectedTab === 'home' }">Главная</a>
 		</router-link>
-		<router-link to="/tarot-spread" @click="setSelectedTab('tarot')">
+		<router-link to="/tarot-spread">
 			<a :class="{ active: selectedTab === 'tarot' }">Расклад</a>
 		</router-link>
-		<router-link to="/questions" @click="setSelectedTab('question')">
+		<router-link to="/questions">
 			<a :class="{ active: selectedTab === 'question' }">Опросник</a>
 		</router-link>
-		<router-link to="/results" @click="setSelectedTab('results')">
+		<router-link to="/results">
 			<a :class="{ active: selectedTab === 'results' }">Результаты</a>
 		</router-link>
 		<div class="animation" :class="`start-${selectedTab}`"></div>
 	</nav>
 </template>
-<script setup>
-import { ref } from 'vue';
+<script setup lang="ts">
+import { ref, computed, watch } from 'vue';
+import { useRoute } from 'vue-router';
 
-const selectedTab = ref('home');
-const setSelectedTab = tab => {
-	selectedTab.value = tab;
-};
+const route = useRoute();
+
+// Вычисляемый параметр для selectedTab
+const selectedTab = computed(() => {
+	switch (route.path) {
+		case '/choose-company':
+			return 'home';
+		case '/tarot-spread':
+			return 'tarot';
+		case '/questions':
+			return 'question';
+		case '/results':
+			return 'results';
+		default:
+			return 'home'; // Значение по умолчанию
+	}
+});
 </script>
 <style lang="scss" scoped>
 nav {

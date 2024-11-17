@@ -2,7 +2,12 @@
 	<div class="table-body-container">
 		<table class="custom-table">
 			<tbody>
-				<tr v-for="row in rows" :key="row.id" :class="{ 'row-active': row.status === 'Active' }">
+				<tr
+					v-for="row in rows"
+					:key="row.id"
+					:class="{ 'row-active': row.status === 'Active' }"
+					@click="handleRowClick(row.id)"
+				>
 					<td style="width: 10%">{{ row.id }}</td>
 					<td style="width: 25%">{{ row.targetFrom }}</td>
 					<td style="width: 25%">{{ row.targetTo }}</td>
@@ -15,13 +20,19 @@
 
 <script setup lang="ts">
 import { defineProps } from 'vue';
+import { useRouter } from 'vue-router';
 
+const router = useRouter();
 defineProps({
 	rows: {
 		type: Array<any>,
 		required: true,
 	},
 });
+
+function handleRowClick(id: number) {
+	router.push(`/details/${id}`);
+}
 </script>
 
 <style lang="scss" scoped>
