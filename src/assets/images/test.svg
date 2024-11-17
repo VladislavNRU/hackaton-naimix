@@ -1,0 +1,36 @@
+<svg width="100%" height="100%" viewBox="0 0 276 276" xmlns="http://www.w3.org/2000/svg">
+  <!-- Основной фон карты -->
+  <rect x="0" y="0" width="276" height="276" rx="44.9302" fill="#FDFBE6"/>
+  
+  <!-- Темная половина карты (левая часть) -->
+  <rect x="0" y="0" width="138" height="276" rx="44.9302" fill="url(#darkGradient)"/>
+  
+  <!-- Светлая половина карты (правая часть) -->
+  <rect x="138" y="0" width="138" height="276" rx="44.9302" fill="url(#sunGradient)"/>
+
+  <!-- Солнце - центральное, в правой половине -->
+  <circle cx="207" cy="70" r="35" fill="#FF9929" stroke="#F25430" stroke-width="2"/>
+  <circle cx="207" cy="70" r="28" fill="white"/>
+  
+  <!-- Луна - центральное, в левой половине -->
+  <circle cx="69" cy="206" r="35" fill="white" stroke="#46202D" stroke-width="2"/>
+  <circle cx="70" cy="206" r="28" fill="#FDFBE6"/>
+  
+  <!-- Дополнительные элементы для гармонии -->
+  <circle cx="107" cy="80" r="10" fill="#FDFBE6" stroke="#46202D" stroke-width="1"/>
+  <circle cx="207" cy="206" r="10" fill="#FDFBE6" stroke="#46202D" stroke-width="1"/>
+  
+  <defs>
+    <!-- Темный градиент для левой половины карты -->
+    <linearGradient id="darkGradient" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#333333"/>
+      <stop offset="1" stop-color="#000000"/>
+    </linearGradient>
+    
+    <!-- Солнечный градиент для правой половины карты -->
+    <linearGradient id="sunGradient" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#FF9929"/>
+      <stop offset="1" stop-color="#F25430"/>
+    </linearGradient>
+  </defs>
+</svg>

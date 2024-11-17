@@ -4,13 +4,13 @@
 			<button class="close-button" @click="closeResult">×</button>
 			<div class="result-content">
 				<h3>Результат расклада</h3>
-				<p>Ваша совместимость: 70%</p>
+				<p>Ваша совместимость: {{score}}%</p>
 			</div>
 		</div>
 	</div>
 </template>
 <script setup lang="ts">
-defineProps<{ showResult: boolean }>();
+defineProps<{ showResult: boolean, score: number}>();
 const emit = defineEmits<{ (e: 'close-result'): void }>();
 
 const closeResult = () => {

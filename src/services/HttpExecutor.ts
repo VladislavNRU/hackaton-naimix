@@ -19,7 +19,6 @@ class HttpExecutor {
 				console.error('Server error:', errorData);
 				throw errorData;
 			}
-
 			response.data = await response.json();
 			this.interceptors.response.resolve(response);
 			return response.data as OUT;
@@ -44,7 +43,7 @@ class HttpExecutor {
 				'Content-Type': 'application/json',
 			};
 		}
-		return fetch(url,{ ...options, mode: 'no-cors' }).then(handleResponse, handleNetworkError);
+		return fetch(url, options).then(handleResponse, handleNetworkError);
 	}
 
 	public get<OUT>(url: string, options?: RequestInit) {

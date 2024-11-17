@@ -7,30 +7,25 @@ const routes: Array<RouteRecordRaw> = [
 		component: () => import('@/modules/core/pages/StartPage.vue'),
 		//meta: { requiresAuth: true, onlyAdmin: true },
 	},
-	// {
-	// 	path: '/login',
-	// 	name: 'login',
-	// 	component: () => import('@modules/auth/pages/AuthPage.vue'),
-	// },
+	{
+		path: '/login',
+		name: 'login',
+		component: () => import('@modules/auth/pages/AuthPage.vue'),
+	},
 	{
 		path: '/tarot-spread',
 		name: 'tarot-spread',
-		component: () => import('@/modules/tarot/pages/TarotSpread.vue'),
+		component: () => import('@modules/tarot/pages/TarotSpreadPage.vue'),
 	},
 	{
 		path: '/questions',
 		name: 'questions',
-		component: () => import('@/modules/core/pages/QuestionsPage.vue'),
+		component: () => import('@modules/questions/pages/QuestionPage.vue'),
 	},
 	{
 		path: '/choose-company',
 		name: 'choose-company',
-		component: () => import('@modules/core/pages/Choose.vue'),
-	},
-	{
-		path: '/auth',
-		name: 'auth',
-		component: () => import('@modules/core/pages/AuthPage.vue'),
+		component: () => import('@/modules/chooseCompany/pages/ChoosePage.vue'),
 	},
 	{
 		path: '/results',
@@ -38,7 +33,7 @@ const routes: Array<RouteRecordRaw> = [
 		component: () => import('@modules/results/pages/ResultPage.vue'),
 	},
 	{
-		path: '/details',
+		path: '/details/:id',
 		name: 'details',
 		component: () => import('@modules/details/pages/DetailsPage.vue'),
 	},
